@@ -9,6 +9,15 @@ const LoginPage = () => {
   const [bio, setBio] = React.useState('')
   const [isDataSubmitted, setIsDataSubmitted] = React.useState(false)
 
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    if (currState === 'Sign up' && !isDataSubmitted) {
+      // submit the signup data
+      setIsDataSubmitted(true);
+      return;
+    } 
+  }
+
   return (
     <div className='min-h-screen bg-cover bg-center flex items-center 
     justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl'>
@@ -17,9 +26,11 @@ const LoginPage = () => {
 
       {/* -------------- right side ------------  */}
        
-      <form action="" className='border-2 bg-white/8 text-white border-gray-500 p-6 flex 
+      <form onSubmit={onSubmitHandler} action="" className='border-2 bg-white/8 text-white border-gray-500 p-6 flex 
       flex-col gap-6rounded-lg shadow-lg'>
-        <h2 className='font-medium text-2xl flex justify-between items-center'>{currState}
+        <h2 className='font-medium text-2xl flex justify-between items-center'>
+          {currState}
+          {isDataSubmitted && <img onClick={()=> setIsDataSubmitted(false)} src={assets.arrow_icon} alt="" className='w-5 cursor-pointer' />}
           <img src={assets.arrow_icon} alt="" className='w-5 cursor-pointer' />
         </h2>
 
@@ -34,7 +45,7 @@ const LoginPage = () => {
               placeholder='Email address' className='p-2 border border-gray-500 rounded-md focus:outline-none 
            focus:ring-2 focus:ring-indigo-500'  />
             
-             <input type="password" onChange={(e) => setEmail(e.target.value)} value={password} required
+             <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} required
               placeholder='Password' className='p-2 border border-gray-500 rounded-md focus:outline-none 
            focus:ring-2 focus:ring-indigo-500'  />
           </>
